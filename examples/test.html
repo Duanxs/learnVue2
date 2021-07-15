@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vue 源码</title>
+</head>
+
+<body>
+  <div id="app">
+    {{msg}}
+
+    <my-comp v-d1 v-d2></my-comp>
+  </div>
+
+  <script src="../dist/vue.js"></script>
+  <script>
+    // debugger
+    // new Vue 的构造函数在 /src/core/instance/index.js
+    const app = new Vue({
+      el: '#app',
+      data() {
+        return {
+          msg: 'hello vue'
+        }
+      },
+      directives: {
+        d1() { console.log('v-d1'); },
+        d2: { bind() { console.log('v-d2'); } }
+      },
+      provide: {
+        myInject: 'inject test'
+      },
+      components: {
+        'myComp': {
+          props: ['my-prop'],
+          // props: {
+          //   myProp1: String,
+          //   myProp2: {
+          //     type: Boolean,
+          //     default: false
+          //   }
+          // },
+          template: `<div>my component == {{renameInject}}</div>`,
+          data() {
+            return {
+              compData: 'component Data'
+            }
+          },
+          // inject: ['myInject'] // 形式一
+          inject: {
+            renameInject: 'myInject'  // 形式二
+          }
+        }
+      },
+    })
+  </script>
+</body>
+
+</html>
