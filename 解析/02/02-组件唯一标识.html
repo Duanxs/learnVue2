@@ -11,6 +11,8 @@
 <body>
   <div id="app">
     {{msg}}
+    <div>根组件 uid：{{_uid}}</div>
+    <show-uid></show-uid>
   </div>
 
   <script src="../../dist/vue.js"></script>
@@ -19,12 +21,18 @@
     // new Vue 的构造函数在 /src/core/instance/index.js
     const app = new Vue({
       el: '#app',
+      components: {
+        showUid: {
+          template: `<div>自定义组件 uid：{{_uid}}</div>`
+        }
+      },
       data() {
         return {
           msg: 'hello vue'
         }
       }
     })
+    // console.log(`🚀 ~ app`, app)
   </script>
 </body>
 

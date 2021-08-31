@@ -86,8 +86,8 @@ export function mergeDataOrFn (
   childVal: any,
   vm?: Component
 ): ?Function {
-  console.log(`🚀 ~ parentVal`, parentVal)
-  console.log(`🚀 ~ childVal`, childVal)
+  // console.log(`🚀 ~ parentVal`, parentVal)
+  // console.log(`🚀 ~ childVal`, childVal)
   console.log(`🚀 ~ vm`, vm)
   // debugger
   // !vm 则为子组件

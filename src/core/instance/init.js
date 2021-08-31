@@ -12,7 +12,7 @@ import { extend, mergeOptions, formatComponentName } from '../util/index'
 
 let uid = 0
 
-export function initMixin (Vue: Class<Component>) {
+export function initMixin(Vue: Class<Component>) {
   // 初始化 Vue
   Vue.prototype._init = function (options?: Object) {
     // Vue 实例
@@ -37,6 +37,7 @@ export function initMixin (Vue: Class<Component>) {
 
     // a flag to avoid this being observed
     vm._isVue = true
+    // console.log(`🚀 ~ initMixin ~ vm.constructor`, vm.constructor)
     // merge options
     // 处理组件配置项
     if (options && options._isComponent) {
@@ -60,6 +61,7 @@ export function initMixin (Vue: Class<Component>) {
         options || {},
         vm
       )
+      // console.log(`🚀 ~ initMixin ~ vm.$options`, vm.$options)
     }
     /* istanbul ignore else */
     if (process.env.NODE_ENV !== 'production') {
@@ -91,7 +93,7 @@ export function initMixin (Vue: Class<Component>) {
   }
 }
 
-export function initInternalComponent (vm: Component, options: InternalComponentOptions) {
+export function initInternalComponent(vm: Component, options: InternalComponentOptions) {
   const opts = vm.$options = Object.create(vm.constructor.options)
   // doing this because it's faster than dynamic enumeration.
   const parentVnode = options._parentVnode
@@ -110,7 +112,7 @@ export function initInternalComponent (vm: Component, options: InternalComponent
   }
 }
 
-export function resolveConstructorOptions (Ctor: Class<Component>) {
+export function resolveConstructorOptions(Ctor: Class<Component>) {
   let options = Ctor.options
   // Vue 初始化时，不走 if
   // options = {
@@ -141,7 +143,7 @@ export function resolveConstructorOptions (Ctor: Class<Component>) {
   return options
 }
 
-function resolveModifiedOptions (Ctor: Class<Component>): ?Object {
+function resolveModifiedOptions(Ctor: Class<Component>): ?Object {
   let modified
   const latest = Ctor.options
   const sealed = Ctor.sealedOptions
