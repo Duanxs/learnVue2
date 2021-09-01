@@ -102,11 +102,15 @@ export function toNumber (val: string): number | string {
 /**
  * Make a map and return a function for checking if a key
  * is in that map.
+ * 建映射，判断值是否映射。返回闭包
+ * @param {string} str - 添加到对象的值
+ * @param {boolean} expectsLowerCase - 是否小写
  */
 export function makeMap (
   str: string,
   expectsLowerCase?: boolean
 ): (key: string) => true | void {
+  // Object.create(null) 创建的对象更纯净，没有原型链
   const map = Object.create(null)
   const list: Array<string> = str.split(',')
   for (let i = 0; i < list.length; i++) {
@@ -119,6 +123,7 @@ export function makeMap (
 
 /**
  * Check if a tag is a built-in tag.
+ * 判断标签是否是 slot,component 
  */
 export const isBuiltInTag = makeMap('slot,component', true)
 
@@ -157,6 +162,7 @@ export function hasOwn (obj: Object | Array<*>, key: string): boolean {
 
 /**
  * Create a cached version of a pure function.
+ * 缓存函数，可节约资源
  */
 export function cached<F: Function> (fn: F): F {
   const cache = Object.create(null)
@@ -168,6 +174,7 @@ export function cached<F: Function> (fn: F): F {
 
 /**
  * Camelize a hyphen-delimited string.
+ * 将羊肉串改为驼峰，并用 cached 函数缓存
  */
 const camelizeRE = /-(\w)/g
 export const camelize = cached((str: string): string => {
@@ -235,6 +242,7 @@ export function toArray (list: any, start?: number): Array<any> {
 
 /**
  * Mix properties into target object.
+ * 对象合并
  */
 export function extend (to: Object, _from: ?Object): Object {
   for (const key in _from) {

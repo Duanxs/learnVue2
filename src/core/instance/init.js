@@ -15,6 +15,7 @@ let uid = 0
 export function initMixin(Vue: Class<Component>) {
   // 初始化 Vue
   Vue.prototype._init = function (options?: Object) {
+  console.log(`🚀 ~ initMixin ~ options`, options)
     // Vue 实例
     // this = {
     //    $data: undefined
@@ -61,7 +62,7 @@ export function initMixin(Vue: Class<Component>) {
         options || {},
         vm
       )
-      // console.log(`🚀 ~ initMixin ~ vm.$options`, vm.$options)
+      console.log(`🚀 ~ initMixin ~ vm.$options`, vm.$options)
     }
     /* istanbul ignore else */
     if (process.env.NODE_ENV !== 'production') {

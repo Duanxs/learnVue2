@@ -88,7 +88,7 @@ export function mergeDataOrFn (
 ): ?Function {
   // console.log(`🚀 ~ parentVal`, parentVal)
   // console.log(`🚀 ~ childVal`, childVal)
-  console.log(`🚀 ~ vm`, vm)
+  // console.log(`🚀 ~ vm`, vm)
   // debugger
   // !vm 则为子组件
   // 因无论是否为子组件，均调用本函数，而子组件不传参数 vm，故而此处加以判断
@@ -323,21 +323,6 @@ export function validateComponentName (name: string) {
  * Ensure all props option syntax are normalized into the
  * Object-based format.
  * 格式化属性为对象格式
- *                          props: {
- *                            myProp: {
- * props: ['myProp']   ==>      type: null
- *                            }
- *                          }
- * 
- * props: {                 props: {
- *   myProp1: String,         myProp1: {
- *   myProp2: {        ==>      type: String,
- *     type: Boolean,         },
- *     default: false         myProp2: {
- * }                            type: Boolean,
- *                              default: false  
- *                            }
- *                          }
  */
 function normalizeProps (options: Object, vm: ?Component) {
   const props = options.props
@@ -346,6 +331,11 @@ function normalizeProps (options: Object, vm: ?Component) {
   let i, val, name
   // 字符串形式，如 ['propA', 'propB', 'propC']
   if (Array.isArray(props)) {
+    //                          props: {
+    //                            myProp: {
+    // props: ['myProp']   ==>      type: null
+    //                            }
+    //                          }
     i = props.length
     while (i--) {
       val = props[i]
@@ -357,12 +347,22 @@ function normalizeProps (options: Object, vm: ?Component) {
         res[name] = { type: null }
       } else if (process.env.NODE_ENV !== 'production') {
         // 若数组内非字符串，非生产环境报错
+        // 生产环境已经可以保证合法，无需判断
         warn('props must be strings when using array syntax.')
       }
     }
     // isPlainObject 见 src/shared/util.js
     // 判断是否为纯对象 [object Object]
   } else if (isPlainObject(props)) {
+    //  props: {                 props: {
+    //    myProp1: String,         myProp1: {
+    //    myProp2: {        ==>      type: String,
+    //      type: Boolean,         },
+    //      default: false         myProp2: {
+    //  }                            type: Boolean,
+    //                               default: false  
+    //                             }
+    //                           }
     for (const key in props) {
       val = props[key]
       // 转驼峰
@@ -372,6 +372,8 @@ function normalizeProps (options: Object, vm: ?Component) {
         : { type: val }
     }
   } else if (process.env.NODE_ENV !== 'production') {
+    // 非生产环境，props 不是数据或对象，则报错
+    // 此举可保证生产环境正确
     warn(
       `Invalid value for option "props": expected an Array or an Object, ` +
       `but got ${toRawType(props)}.`,
@@ -395,12 +397,12 @@ function normalizeInject (options: Object, vm: ?Component) {
   if (!inject) return
   // normalized 和 options.inject 同源
   const normalized = options.inject = {}
-  // inject 为数组
+  // inject 为数组时
   if (Array.isArray(inject)) {
     for (let i = 0; i < inject.length; i++) {
       normalized[inject[i]] = { from: inject[i] }
     }
-    // inject 为对象
+    // inject 为对象时
   } else if (isPlainObject(inject)) {
     for (const key in inject) {
       const val = inject[key]
@@ -451,6 +453,7 @@ export function mergeOptions (
   child: Object,
   vm?: Component
 ): Object {
+  console.log(`🚀 ~ normalizeProps ~ child11111`, child)
   // 校验工作完成于非生产环境，生产环境下不必再校验，巧妙
   if (process.env.NODE_ENV !== 'production') {
     // 检查组件名
@@ -458,9 +461,10 @@ export function mergeOptions (
     checkComponents(child)
   }
 
-  // 此处说明 child 亦可为函数
+  // 此处说明 child 亦可为函数，只有 Vue 构造函数有静态属性 options，不曾复现，待研究。
   // Vue 构造函数有 options 属性
   // Vue.extend 生成的子类也有 options 属性
+  // console.log(`🚀 ~ child`, child)
   if (typeof child === 'function') {
     child = child.options
   }
@@ -474,16 +478,16 @@ export function mergeOptions (
   //     default: 0
   //   }
   // }
-  // 此三个方法用以统一写法
+  // 选项 options 在开发时写法众多，此三个方法用以统一写法
   normalizeProps(child, vm)  // 规范 props 为对象
   normalizeInject(child, vm) // 规范 inject 为对象，inject 见 https://cn.vuejs.org/v2/guide/components-edge-cases.html#%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5
-  normalizeDirectives(child) // 规范自定义指令为统一写法
+  normalizeDirectives(child) // 规范自定义指令为统一写法，见 https://cn.vuejs.org/v2/guide/custom-directive.html
 
   // Apply extends and mixins on the child options,
   // but only if it is a raw options object that isn't
   // the result of another mergeOptions call.
   // Only merged options has the _base property.
-  // 合并过的有 _base 属性
+  // 此判断可保证只处理未经 mergeOtions 的，合并过的有 _base 属性
   if (!child._base) {
     if (child.extends) {
       parent = mergeOptions(parent, child.extends, vm)
@@ -494,6 +498,7 @@ export function mergeOptions (
       }
     }
   }
+  console.log(`🚀 ~ normalizeProps ~ child`, child)
 
   const options = {}
   let key
