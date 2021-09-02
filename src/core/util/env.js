@@ -59,6 +59,7 @@ export function isNative (Ctor: any): boolean {
   return typeof Ctor === 'function' && /native code/.test(Ctor.toString())
 }
 
+// 用于判断当前环境是否支持 Symbol Reflect
 export const hasSymbol =
   typeof Symbol !== 'undefined' && isNative(Symbol) &&
   typeof Reflect !== 'undefined' && isNative(Reflect.ownKeys)

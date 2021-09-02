@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vue2 源码学习笔记-选项 extends 合并</title>
+</head>
+
+<body>
+  <div id="app">
+    {{msg}}
+  </div>
+
+  <script src="../../dist/vue.js"></script>
+  <script>
+    const extendsObj = {
+      data() {
+        return {
+          msg: 'extends 信息'
+        }
+      },
+      created() {
+        console.log('这是 extends 信息')
+      }
+    }
+    const extendsFunc = Vue.extend({
+      template: `<div>{{extendsMsg}}</div>`,
+      data() {
+        return {
+          extendsMsg: '这是 Vue.extends'
+        }
+      }
+    })
+    // new Vue 的构造函数在 /src/core/instance/index.js
+    const app = new Vue({
+      el: '#app',
+      extends: extendsFunc,
+      data() {
+        return {
+          msg: '原信息'
+        }
+      },
+      created() {
+        console.log('这是原有信息')
+      }
+    })
+    
+  </script>
+</body>
+
+</html>

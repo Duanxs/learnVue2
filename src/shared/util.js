@@ -153,7 +153,7 @@ export function remove (arr: Array<any>, item: any): Array<any> | void {
  * o.hasOwnProperty('toString') === false // 继承属性
  */
 // 此处调用原型链上的 hasOwnProperty 原因在于：js 未保护属性名 hasOwnProperty，
-// 假使声明对象时占用 hasOwnProperty，可能导致调用出现意外，
+// 假使声明对象时占用 hasOwnProperty，如 const obj = {hasOwnProperty: null}，可能导致调用出现意外，
 // 而调用原型链上真正的 hasOwnProperty 可避免此问题
 const hasOwnProperty = Object.prototype.hasOwnProperty
 export function hasOwn (obj: Object | Array<*>, key: string): boolean {

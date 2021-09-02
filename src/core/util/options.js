@@ -27,23 +27,27 @@ import {
  * value into the final value.
  */
 // 初始化合并策略， 自定义合并策略见 https://cn.vuejs.org/v2/guide/mixins.html#%E8%87%AA%E5%AE%9A%E4%B9%89%E9%80%89%E9%A1%B9%E5%90%88%E5%B9%B6%E7%AD%96%E7%95%A5
+// 此时 strats 是纯空对象 {}
 const strats = config.optionMergeStrategies
 
 /**
  * Options with restrictions
  * 非生产环境下的默认策略
- * 生产环境下 strats.el === strats.propsData === undefined
+ * 子组件没有有 el 属性
+ * 例子见 /解析/杂例/子组件属性el合并策略.html
  */
 if (process.env.NODE_ENV !== 'production') {
   strats.el = strats.propsData = function (parent, child, vm, key) {
     // 只有在 new Vue 时，mergeOptions 传递 vm，子类不传
-    // 故而没有 vm 即可断定为组件
+    // 故没有 vm 即断定为子组件
     if (!vm) {
       warn(
         `option "${key}" can only be used during instance ` +
         'creation with the `new` keyword.'
       )
     }
+    // defaultStrat 定义在本页
+    // 此为默认策略，有子则子，无子则父
     return defaultStrat(parent, child)
   }
 }
@@ -52,15 +56,21 @@ if (process.env.NODE_ENV !== 'production') {
  * Helper that recursively merges two data objects together.
  */
 function mergeData (to: Object, from: ?Object): Object {
+  // console.log(`🚀 ~ mergeData ~ from`, from)
+  // 没有来源，无需操作
   if (!from) return to
   let key, toVal, fromVal
 
+  // hasSymbol 定义于 src/core/util/env.js
+  // 用于判断当前环境是否支持 Symbol Reflect
+  // Reflect 见 https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Reflect
   const keys = hasSymbol
     ? Reflect.ownKeys(from)
     : Object.keys(from)
 
   for (let i = 0; i < keys.length; i++) {
     key = keys[i]
+    console.log(`🚀 ~ mergeData ~ key`, key)
     // in case the object is already observed...
     if (key === '__ob__') continue
     toVal = to[key]
@@ -86,12 +96,11 @@ export function mergeDataOrFn (
   childVal: any,
   vm?: Component
 ): ?Function {
-  // console.log(`🚀 ~ parentVal`, parentVal)
-  // console.log(`🚀 ~ childVal`, childVal)
+  console.log(`🚀 ~ parentVal`, parentVal)
+  console.log(`🚀 ~ childVal`, childVal)
   // console.log(`🚀 ~ vm`, vm)
-  // debugger
   // !vm 则为子组件
-  // 因无论是否为子组件，均调用本函数，而子组件不传参数 vm，故而此处加以判断
+  // 因无论是否为子组件，均可能有 data，而子组件不传参数 vm，故而此处加以判断
   if (!vm) {
     // in a Vue.extend merge, both should be functions
     // const Parent = Vue.extend({
@@ -138,14 +147,16 @@ export function mergeDataOrFn (
   }
 }
 
-// 对 data 的合并策略
+// data 的合并策略
 strats.data = function (
   parentVal: any,
   childVal: any,
   vm?: Component
 ): ?Function {
-  // vm 用以判断子组件
+  // vm 以判断子组件
   if (!vm) {
+    // 此处判断有无子选项，且类型不为函数，且为非生产环境
+    // 子为对象，则可能污染父，故返回父
     if (childVal && typeof childVal !== 'function') {
       process.env.NODE_ENV !== 'production' && warn(
         'The "data" option should be a function ' +
@@ -153,12 +164,15 @@ strats.data = function (
         'definitions.',
         vm
       )
-
+      // 子则返父
       return parentVal
     }
+    // 子 data 合并策略
+    // mergeDataOrFn 定义于上方
     return mergeDataOrFn(parentVal, childVal)
   }
 
+  // 父 data 合并策略
   return mergeDataOrFn(parentVal, childVal, vm)
 }
 
@@ -447,13 +461,14 @@ function assertObjectType (name: string, value: any, vm: ?Component) {
 /**
  * Merge two option objects into a new one.
  * Core utility used in both instantiation and inheritance.
+ * 选项合并函数，会返回新的的选项
  */
 export function mergeOptions (
   parent: Object,
   child: Object,
   vm?: Component
 ): Object {
-  console.log(`🚀 ~ normalizeProps ~ child11111`, child)
+  // console.log(`🚀 ~ normalizeProps ~ child11111`, child)
   // 校验工作完成于非生产环境，生产环境下不必再校验，巧妙
   if (process.env.NODE_ENV !== 'production') {
     // 检查组件名
@@ -461,9 +476,9 @@ export function mergeOptions (
     checkComponents(child)
   }
 
-  // 此处说明 child 亦可为函数，只有 Vue 构造函数有静态属性 options，不曾复现，待研究。
-  // Vue 构造函数有 options 属性
+  // 此处说明 child 亦可为函数，只有 Vue 构造函数有静态属性 options
   // Vue.extend 生成的子类也有 options 属性
+  // 选项 extends 的类型可以是对象也可以是函数，例子见 /解析/杂例/选项extends合并.html
   // console.log(`🚀 ~ child`, child)
   if (typeof child === 'function') {
     child = child.options
@@ -487,19 +502,21 @@ export function mergeOptions (
   // but only if it is a raw options object that isn't
   // the result of another mergeOptions call.
   // Only merged options has the _base property.
-  // 此判断可保证只处理未经 mergeOtions 的，合并过的有 _base 属性
+  // 合并过的选项有 _base 属性，_base 在何处，待查证
   if (!child._base) {
+    // 选项 extends 合并 见 https://cn.vuejs.org/v2/api/#extends
     if (child.extends) {
       parent = mergeOptions(parent, child.extends, vm)
     }
+    // 选项 mixins 合并，mixins 是对象数组 见 https://cn.vuejs.org/v2/api/#mixins
     if (child.mixins) {
       for (let i = 0, l = child.mixins.length; i < l; i++) {
         parent = mergeOptions(parent, child.mixins[i], vm)
       }
     }
   }
-  console.log(`🚀 ~ normalizeProps ~ child`, child)
 
+  // 选项整理后存放于此
   const options = {}
   let key
   // parent = {
@@ -519,14 +536,18 @@ export function mergeOptions (
   //   ...
   // }
   for (key in child) {
-    // 判断属性是否存在
+    // 处理父级没有的属性
     if (!hasOwn(parent, key)) {
       mergeField(key)
     }
   }
+  // console.log(`🚀 ~ mergeField ~ strats`, strats)
+  // console.log(`🚀 ~ mergeField ~ defaultStrat`, defaultStrat)
   function mergeField (key) {
     // 常量 strats 为合并策略，定义在顶部
     // 生产环境，因 strats.el 和 strats.propData 为 undefined，故而直接走 defaultStrat
+    // console.log(`🚀 ~ mergeField ~ strats[key]`, key)
+    // defaultStrat 定义在本文件。默认策略是，有子则子，无子则父
     const strat = strats[key] || defaultStrat
     options[key] = strat(parent[key], child[key], vm, key)
   }
