@@ -140,6 +140,7 @@ export function defineReactive (
   customSetter?: ?Function,
   shallow?: boolean
 ) {
+  // 类 Dep 见 src/core/observer/dep.js
   const dep = new Dep()
 
   const property = Object.getOwnPropertyDescriptor(obj, key)
@@ -198,23 +199,42 @@ export function defineReactive (
  * Set a property on an object. Adds the new property and
  * triggers change notification if the property doesn't
  * already exist.
+ * 向响应式对象添加属性，并确保新属性同样是响应式的，且触发视图更新。
+ * set 即 $set
  */
 export function set (target: Array<any> | Object, key: any, val: any): any {
+  // isUndef 见 src/shared/util.js。判断 undefined null
+  // isPrimitive 见 src/shared/util.js。判断原始数据类型 string number boolean symbol
+  // 目标值不能是原始类型，非生产环境校验后，生产环境不必再校验
   if (process.env.NODE_ENV !== 'production' &&
     (isUndef(target) || isPrimitive(target))
   ) {
     warn(`Cannot set reactive property on undefined, null, or primitive value: ${(target: any)}`)
   }
+  // isValidArrayIndex 见 src/shared/util.js
+  // 目标是数组，键名必须为合法数据下标，即非负整数
   if (Array.isArray(target) && isValidArrayIndex(key)) {
+    // 防止数组越界，数组长度为原长度与下标择其大者
     target.length = Math.max(target.length, key)
+    // let a = [1, 2, 3]
+    // a.splice(8, 1, 8) // [1, 2, 3, 8]
+    // a.length = 8
+    // a.splice(8, 1, 8) // [1, 2, 3, 空 ×5, 8]
     target.splice(key, 1, val)
     return val
   }
+  // 目标已有，且不为对象保留属性，则覆盖之
   if (key in target && !(key in Object.prototype)) {
     target[key] = val
     return val
   }
   const ob = (target: any).__ob__
+  // console.log(`🚀 ~ set ~ (target: any).__ob__`, (target: any)._isVue)
+  // console.log(`🚀 ~ set ~ ob`, ob)
+  // target._isVue，目标为 Vue 实例，例：Vue.set(new Vue(), 'a', 'bbb')
+  // ob && ob.vmCount，目标为 Vue 实例的根数据对象，
+  // vmCount 为实例被引用次数，比如按钮组件，被引用三次，vmCount = 3
+  // 例子：Vue.set(new Vue().$data, 'a', 'bbb')
   if (target._isVue || (ob && ob.vmCount)) {
     process.env.NODE_ENV !== 'production' && warn(
       'Avoid adding reactive properties to a Vue instance or its root $data ' +
@@ -226,6 +246,7 @@ export function set (target: Array<any> | Object, key: any, val: any): any {
     target[key] = val
     return val
   }
+  // 此函数定义于上方
   defineReactive(ob.value, key, val)
   ob.dep.notify()
   return val
