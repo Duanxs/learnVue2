@@ -56,6 +56,7 @@ if (process.env.NODE_ENV !== 'production') {
  * Helper that recursively merges two data objects together.
  */
 function mergeData (to: Object, from: ?Object): Object {
+  // console.log(`🚀 ~ mergeData ~ to`, to)
   // console.log(`🚀 ~ mergeData ~ from`, from)
   // 没有来源，无需操作
   if (!from) return to
@@ -70,12 +71,14 @@ function mergeData (to: Object, from: ?Object): Object {
 
   for (let i = 0; i < keys.length; i++) {
     key = keys[i]
-    console.log(`🚀 ~ mergeData ~ key`, key)
     // in case the object is already observed...
+    // 已观察的对象才有属性 __ob__，但已观察为何走此，待研究。。。
     if (key === '__ob__') continue
     toVal = to[key]
     fromVal = from[key]
     if (!hasOwn(to, key)) {
+      // 函数 set 见 解析/杂例/data合并策略.html
+      // set 即 $set
       set(to, key, fromVal)
     } else if (
       toVal !== fromVal &&
@@ -85,6 +88,7 @@ function mergeData (to: Object, from: ?Object): Object {
       mergeData(toVal, fromVal)
     }
   }
+  console.log(`🚀 ~ mergeData ~ to`, to)
   return to
 }
 
@@ -96,8 +100,8 @@ export function mergeDataOrFn (
   childVal: any,
   vm?: Component
 ): ?Function {
-  console.log(`🚀 ~ parentVal`, parentVal)
-  console.log(`🚀 ~ childVal`, childVal)
+  // console.log(`🚀 ~ parentVal`, parentVal)
+  // console.log(`🚀 ~ childVal`, childVal)
   // console.log(`🚀 ~ vm`, vm)
   // !vm 则为子组件
   // 因无论是否为子组件，均可能有 data，而子组件不传参数 vm，故而此处加以判断
@@ -109,6 +113,7 @@ export function mergeDataOrFn (
     //   }
     // })
     // const Child = Parent.extend({})
+    // 例见 解析/杂例/data合并策略.html
     // 此时 childVal 不存在，parentVal 存在
     if (!childVal) {
       return parentVal

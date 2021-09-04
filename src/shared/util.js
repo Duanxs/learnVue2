@@ -65,9 +65,14 @@ export function isRegExp (v: any): boolean {
 
 /**
  * Check if val is a valid array index.
+ * 数据下标应为非负整数
  */
 export function isValidArrayIndex (val: any): boolean {
+  // 此处不用 Number 转换是因为 Number 遇到无效字符即返回 NaN
+  // 如 Number('3.14abc') 值为 NaN，parseFloat('3.14abc') 值为 3.14
+  // String 转换是因为 parseFloat 的参数为字符串
   const n = parseFloat(String(val))
+  // isFinite 用以判断有限值
   return n >= 0 && Math.floor(n) === n && isFinite(val)
 }
 
@@ -134,6 +139,8 @@ export const isReservedAttribute = makeMap('key,ref,slot,slot-scope,is')
 
 /**
  * Remove an item from an array.
+ * @param {Array} arr - 数组
+ * @param {any} item - 移除项
  */
 export function remove (arr: Array<any>, item: any): Array<any> | void {
   if (arr.length) {

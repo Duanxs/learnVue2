@@ -4,6 +4,7 @@ import type Watcher from './watcher'
 import { remove } from '../util/index'
 import config from '../config'
 
+// Dep 实例的 id
 let uid = 0
 
 /**
@@ -11,20 +12,29 @@ let uid = 0
  * directives subscribing to it.
  */
 export default class Dep {
-  static target: ?Watcher;
-  id: number;
-  subs: Array<Watcher>;
+  static target: ?Watcher;  // 在下方添加
+  id: number;               // Dep 实例的 id
+  subs: Array<Watcher>;     // 订阅者
 
   constructor () {
     this.id = uid++
     this.subs = []
   }
 
+  /**
+   * 添加订阅者
+   * @param {Watcher} sub - 订阅者
+   */
   addSub (sub: Watcher) {
     this.subs.push(sub)
   }
 
+  /**
+   * 移除订阅者
+   * @param {Watcher} sub - 订阅者
+   */
   removeSub (sub: Watcher) {
+    // remove 见 src/shared/util.js
     remove(this.subs, sub)
   }
 
@@ -34,6 +44,7 @@ export default class Dep {
     }
   }
 
+  // 通知
   notify () {
     // stabilize the subscriber list first
     const subs = this.subs.slice()
