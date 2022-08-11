@@ -1,0 +1,16 @@
+{
+  "name": "learnVue2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "slidev"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@slidev/cli": "^0.35.4",
+    "@slidev/theme-default": "^0.21.2"
+  }
+}
