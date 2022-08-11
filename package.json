@@ -13,8 +13,5 @@
   "dependencies": {
     "@slidev/cli": "^0.35.4",
     "@slidev/theme-default": "^0.21.2"
-  },
-  "devDependencies": {
-    "rollup": "^2.77.3"
   }
 }

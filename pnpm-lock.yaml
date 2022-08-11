@@ -3,14 +3,10 @@ lockfileVersion: 5.4
 specifiers:
   '@slidev/cli': ^0.35.4
   '@slidev/theme-default': ^0.21.2
-  rollup: ^2.77.3
 
 dependencies:
-  '@slidev/cli': registry.npmmirror.com/@slidev/cli/0.35.4_rollup@2.77.3
+  '@slidev/cli': registry.npmmirror.com/@slidev/cli/0.35.4
   '@slidev/theme-default': registry.npmmirror.com/@slidev/theme-default/0.21.2
-
-devDependencies:
-  rollup: registry.npmmirror.com/rollup/2.77.3
 
 packages:
 
@@ -238,9 +234,8 @@ packages:
       picomatch: registry.npmmirror.com/picomatch/2.3.1
     dev: false
 
-  registry.npmmirror.com/@slidev/cli/0.35.4_rollup@2.77.3:
+  registry.npmmirror.com/@slidev/cli/0.35.4:
     resolution: {integrity: sha512-roPNDqASWMkUrwPDOUcco+90zE0EIrSXuRWfnAlSygIZMv8JgNvkGsoJQgoRvbpThPmNvWJ6DKBjp4L8YFzY+Q==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@slidev/cli/-/cli-0.35.4.tgz}
-    id: registry.npmmirror.com/@slidev/cli/0.35.4
     name: '@slidev/cli'
     version: 0.35.4
     engines: {node: '>=14.0.0'}
@@ -288,8 +283,8 @@ packages:
       resolve-global: registry.npmmirror.com/resolve-global/1.0.0
       shiki: registry.npmmirror.com/shiki/0.10.1
       unocss: registry.npmmirror.com/unocss/0.45.5_vite@3.0.5
-      unplugin-icons: registry.npmmirror.com/unplugin-icons/0.14.8_ygv3ywpqu75u7u4zyycnml727e
-      unplugin-vue-components: registry.npmmirror.com/unplugin-vue-components/0.21.2_czdsai5bofn675qmmzhijybbyu
+      unplugin-icons: registry.npmmirror.com/unplugin-icons/0.14.8_zhlseqdhwgnknp4fbqhm53eb6y
+      unplugin-vue-components: registry.npmmirror.com/unplugin-vue-components/0.21.2_vite@3.0.5+vue@3.2.37
       vite: registry.npmmirror.com/vite/3.0.5
       vite-plugin-remote-assets: registry.npmmirror.com/vite-plugin-remote-assets/0.3.0_vite@3.0.5
       vite-plugin-vue-markdown: registry.npmmirror.com/vite-plugin-vue-markdown/0.20.1_vite@3.0.5
@@ -2285,6 +2280,7 @@ packages:
     engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
     os: [darwin]
     requiresBuild: true
+    dev: false
     optional: true
 
   registry.npmmirror.com/function-bind/1.1.1:
@@ -3116,6 +3112,7 @@ packages:
     hasBin: true
     optionalDependencies:
       fsevents: registry.npmmirror.com/fsevents/2.3.2
+    dev: false
 
   registry.npmmirror.com/run-parallel/1.2.0:
     resolution: {integrity: sha512-5l4VyZR86LZ/lDxZTR6jqL8AFE2S0IFLMP26AbjsLVADxHdhB/c0GUsH+y39UfCi3dzz8OlQuPmnaJOMoDHQBA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/run-parallel/-/run-parallel-1.2.0.tgz}
@@ -3397,7 +3394,7 @@ packages:
     engines: {node: '>= 0.8'}
     dev: false
 
-  registry.npmmirror.com/unplugin-icons/0.14.8_ygv3ywpqu75u7u4zyycnml727e:
+  registry.npmmirror.com/unplugin-icons/0.14.8_zhlseqdhwgnknp4fbqhm53eb6y:
     resolution: {integrity: sha512-YxLC0Uxec+ayl8ju3CXmRX4Jg7IF8Tu2cRyq/okXwMK6fM140SPae332ByTlul1E/I7I0PXYSVVn8SlGunM/2g==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/unplugin-icons/-/unplugin-icons-0.14.8.tgz}
     id: registry.npmmirror.com/unplugin-icons/0.14.8
     name: unplugin-icons
@@ -3424,7 +3421,7 @@ packages:
       debug: registry.npmmirror.com/debug/4.3.4
       kolorist: registry.npmmirror.com/kolorist/1.5.1
       local-pkg: registry.npmmirror.com/local-pkg/0.4.2
-      unplugin: registry.npmmirror.com/unplugin/0.8.1_rollup@2.77.3+vite@3.0.5
+      unplugin: registry.npmmirror.com/unplugin/0.8.1_vite@3.0.5
     transitivePeerDependencies:
       - esbuild
       - rollup
@@ -3433,7 +3430,7 @@ packages:
       - webpack
     dev: false
 
-  registry.npmmirror.com/unplugin-vue-components/0.21.2_czdsai5bofn675qmmzhijybbyu:
+  registry.npmmirror.com/unplugin-vue-components/0.21.2_vite@3.0.5+vue@3.2.37:
     resolution: {integrity: sha512-HBU+EuesDj/HRs7EtYH7gBACljVhqLylltrCLModRmCToIIrrNvMh54aylUt4AD4qiwylgOx4Vgb9sBlrIcRDw==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/unplugin-vue-components/-/unplugin-vue-components-0.21.2.tgz}
     id: registry.npmmirror.com/unplugin-vue-components/0.21.2
     name: unplugin-vue-components
@@ -3455,7 +3452,7 @@ packages:
       magic-string: registry.npmmirror.com/magic-string/0.26.2
       minimatch: registry.npmmirror.com/minimatch/5.1.0
       resolve: registry.npmmirror.com/resolve/1.22.1
-      unplugin: registry.npmmirror.com/unplugin/0.7.2_rollup@2.77.3+vite@3.0.5
+      unplugin: registry.npmmirror.com/unplugin/0.7.2_vite@3.0.5
       vue: registry.npmmirror.com/vue/3.2.37
     transitivePeerDependencies:
       - esbuild
@@ -3465,7 +3462,7 @@ packages:
       - webpack
     dev: false
 
-  registry.npmmirror.com/unplugin/0.7.2_rollup@2.77.3+vite@3.0.5:
+  registry.npmmirror.com/unplugin/0.7.2_vite@3.0.5:
     resolution: {integrity: sha512-m7thX4jP8l5sETpLdUASoDOGOcHaOVtgNyrYlToyQUvILUtEzEnngRBrHnAX3IKqooJVmXpoa/CwQ/QqzvGaHQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/unplugin/-/unplugin-0.7.2.tgz}
     id: registry.npmmirror.com/unplugin/0.7.2
     name: unplugin
@@ -3487,13 +3484,12 @@ packages:
     dependencies:
       acorn: registry.npmmirror.com/acorn/8.8.0
       chokidar: registry.npmmirror.com/chokidar/3.5.3
-      rollup: registry.npmmirror.com/rollup/2.77.3
       vite: registry.npmmirror.com/vite/3.0.5
       webpack-sources: registry.npmmirror.com/webpack-sources/3.2.3
       webpack-virtual-modules: registry.npmmirror.com/webpack-virtual-modules/0.4.4
     dev: false
 
-  registry.npmmirror.com/unplugin/0.8.1_rollup@2.77.3+vite@3.0.5:
+  registry.npmmirror.com/unplugin/0.8.1_vite@3.0.5:
     resolution: {integrity: sha512-o7rUZoPLG1fH4LKinWgb77gDtTE6mw/iry0Pq0Z5UPvZ9+HZ1/4+7fic7t58s8/CGkPrDpGq+RltO+DmswcR4g==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/unplugin/-/unplugin-0.8.1.tgz}
     id: registry.npmmirror.com/unplugin/0.8.1
     name: unplugin
@@ -3515,7 +3511,6 @@ packages:
     dependencies:
       acorn: registry.npmmirror.com/acorn/8.8.0
       chokidar: registry.npmmirror.com/chokidar/3.5.3
-      rollup: registry.npmmirror.com/rollup/2.77.3
       vite: registry.npmmirror.com/vite/3.0.5
       webpack-sources: registry.npmmirror.com/webpack-sources/3.2.3
       webpack-virtual-modules: registry.npmmirror.com/webpack-virtual-modules/0.4.4
