@@ -1,13 +1,23 @@
 ---
-title: first
-layout: cover
+highlighter: shiki
 ---
 
-# first
+# Vue 2 逐步实现
 
-one
+从头实现 Vue 2，以理解其中奥秘
+
+<div class="abs-tr">
+  <img src="/bg-cover.svg" >
+</div>
 
 ---
-src: ./src/pages/环境搭建.md
+src: ./pages/001-环境搭建.md
 ---
 
+---
+src: ./pages/002-rollup配置.md
+---
+
+---
+src: ./pages/003-试打包.md
+---
