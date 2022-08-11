@@ -12,7 +12,7 @@ let uid = 0
  * directives subscribing to it.
  */
 export default class Dep {
-  static target: ?Watcher;  // 在下方添加
+  static target: ?Watcher;  // 当前的订阅者
   id: number;               // Dep 实例的 id
   subs: Array<Watcher>;     // 订阅者
 
@@ -38,6 +38,7 @@ export default class Dep {
     remove(this.subs, sub)
   }
 
+  // 依赖收集，添加当前的 Watcher
   depend () {
     if (Dep.target) {
       Dep.target.addDep(this)

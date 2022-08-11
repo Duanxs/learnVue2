@@ -10,6 +10,7 @@ import { compileToFunctions } from './compiler/index'
 import { shouldDecodeNewlines, shouldDecodeNewlinesForHref } from './util/compat'
 
 const idToTemplate = cached(id => {
+  // 获取 DOM
   const el = query(id)
   return el && el.innerHTML
 })
@@ -19,9 +20,14 @@ Vue.prototype.$mount = function (
   el?: string | Element,
   hydrating?: boolean
 ): Component {
+  console.log(`🚀 ~ el`, el)
+  console.log(`🚀 ~ hydrating`, this)
+  // debugger
   el = el && query(el)
 
+  // Istanbul 是代码覆盖率工具
   /* istanbul ignore if */
+  // 不能挂在到 <html> 或 <body> 标签
   if (el === document.body || el === document.documentElement) {
     process.env.NODE_ENV !== 'production' && warn(
       `Do not mount Vue to <html> or <body> - mount to normal elements instead.`
