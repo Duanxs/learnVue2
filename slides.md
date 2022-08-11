@@ -21,3 +21,7 @@ src: ./pages/002-rollup配置.md
 ---
 src: ./pages/003-试打包.md
 ---
+
+---
+src: ./pages/004-Vue构造函数.md
+---
