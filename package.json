@@ -1,10 +1,11 @@
 {
-  "name": "learnVue2",
+  "name": "learn-vue2",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "slidev"
+    "dev": "slidev",
+    "vue-dev": "rollup -c -w"
   },
   "keywords": [],
   "author": "",
@@ -12,5 +13,8 @@
   "dependencies": {
     "@slidev/cli": "^0.35.4",
     "@slidev/theme-default": "^0.21.2"
+  },
+  "devDependencies": {
+    "rollup": "^2.77.3"
   }
 }
