@@ -1,5 +1,6 @@
 ---
 highlighter: shiki
+title: Vue 2 逐步实现
 ---
 
 # Vue 2 逐步实现
@@ -10,8 +11,9 @@ highlighter: shiki
   <img src="/bg-cover.svg" >
 </div>
 
+
 ---
-src: ./pages/001-环境搭建.md
+src: ./pages/001-目录结构.md
 ---
 
 ---
