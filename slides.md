@@ -1,6 +1,7 @@
 ---
 highlighter: shiki
 title: Vue 2 逐步实现
+lineNumbers: true
 ---
 
 # Vue 2 逐步实现
@@ -17,13 +18,9 @@ src: ./pages/001-目录结构.md
 ---
 
 ---
-src: ./pages/002-rollup配置.md
+src: ./pages/002-试运行.md
 ---
 
 ---
-src: ./pages/003-试打包.md
----
-
----
-src: ./pages/004-Vue构造函数.md
+src: ./pages/003-Vue构造函数.md
 ---
