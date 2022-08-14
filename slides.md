@@ -2,14 +2,15 @@
 highlighter: shiki
 title: Vue 2 逐步实现
 lineNumbers: true
+canvasWidth: 1280
 ---
 
 # Vue 2 逐步实现
 
 从头实现 Vue 2，以理解其中奥秘
 
-<div class="abs-tr">
-  <img src="/bg-cover.svg" >
+<div class="abs-tr h-full">
+  <img src="/bg-cover.svg" class="h-full" >
 </div>
 
 
@@ -22,5 +23,5 @@ src: ./pages/002-试运行.md
 ---
 
 ---
-src: ./pages/003-Vue构造函数.md
+src: ./pages/003-Vue初始化.md
 ---
