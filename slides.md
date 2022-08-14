@@ -25,3 +25,7 @@ src: ./pages/002-试运行.md
 ---
 src: ./pages/003-Vue初始化.md
 ---
+
+---
+src: ./pages/004-init函数.md
+---
