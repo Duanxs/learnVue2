@@ -9,6 +9,9 @@ canvasWidth: 1280
 
 从头实现 Vue 2，以理解其中奥秘
 
+<!-- {{ $slidev.nav }} -->
+
+
 <div class="abs-tr h-full">
   <img src="/bg-cover.svg" class="h-full" >
 </div>
@@ -32,4 +35,8 @@ src: ./pages/004-init函数.md
 
 ---
 src: ./pages/005-处理状态选项.md
+---
+
+---
+src: ./pages/006-处理选项data.md
 ---

@@ -1,3 +1,5 @@
+import { isFunction } from './shared/utils'
+import { observe } from './observer'
 export function initState(vm) {
   const opts = vm.$options
   // console.log(`initState ~ opts`, opts)
@@ -8,8 +10,13 @@ export function initState(vm) {
   if (opts.watch) initWatch(vm, opts.watch)
 }
 
-function initProps(vm, propsOptions) { }
-function initMethods(vm, methods) { }
-function initData(vm) { }
-function initComputed(vm, computed) { }
-function initWatch(vm, watch) { }
+function initProps(vm, propsOptions) {}
+function initMethods(vm, methods) {}
+function initData(vm) {
+  let data = vm.$options.data
+  data = vm._data = isFunction(data) ? getData(data, vm) : data || {}
+
+  observe(data)
+}
+function initComputed(vm, computed) {}
+function initWatch(vm, watch) {}
