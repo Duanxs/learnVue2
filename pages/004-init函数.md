@@ -36,7 +36,7 @@ Vue 2 中，一切功能均围绕选项实现，因而首先要处理传入的�
 
 ```js {1,5-6|1,8|1,2|all} {at:2}
 // /vue/src/init.js
-import { initState } from './state'
+import { initState } from './state.js'
 export function initMixin(Vue) {
   Vue.prototype._init = function (options) {
     const vm = this

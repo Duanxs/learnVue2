@@ -52,7 +52,7 @@ function initData(vm) {
 
 ```js {1,2,11} {at:4}
 // /vue/src/state.js
-import { isFunction } from './shared/utils'
+import { isFunction } from './shared/utils.js'
 export function initState(vm) {
   // ...
   if (opts.data) initData(vm)
@@ -77,8 +77,8 @@ export function isFunction(value){
 
 ```js {1,3,14|all} {at:5}
 // /vue/src/state.js
-import { isFunction } from './shared/utils'
-import { observe } from './observer'
+import { isFunction } from './shared/utils.js'
+import { observe } from './observer/index.js'
 export function initState(vm) {
   // ...
   if (opts.data) initData(vm)
