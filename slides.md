@@ -44,3 +44,7 @@ src: ./pages/006-处理选项data.md
 ---
 src: ./pages/007-监听数据.md
 ---
+
+---
+src: ./pages/008-监听嵌套对象.md
+---

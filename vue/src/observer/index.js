@@ -15,6 +15,7 @@ export class Observer {
 }
 
 export function defineReactive(obj, key, value) {
+  observe(value)
   Object.defineProperty(obj, key, {
     get() {
       return value
@@ -23,6 +24,7 @@ export function defineReactive(obj, key, value) {
       if(value === newValue) return
       console.log('变了')
       value = newValue
+      observe(newValue)
     }
   })
 }
