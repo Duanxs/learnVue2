@@ -1,5 +1,5 @@
-import { isFunction } from './shared/utils'
-import { observe } from './observer'
+import { isFunction } from './shared/utils.js'
+import { observe } from './observer/index.js'
 export function initState(vm) {
   const opts = vm.$options
   // console.log(`initState ~ opts`, opts)
@@ -14,7 +14,7 @@ function initProps(vm, propsOptions) {}
 function initMethods(vm, methods) {}
 function initData(vm) {
   let data = vm.$options.data
-  data = vm._data = isFunction(data) ? getData(data, vm) : data || {}
+  data = vm._data = isFunction(data) ? data.call(vm) : data || {}
 
   observe(data)
 }
