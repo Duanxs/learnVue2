@@ -1,4 +1,6 @@
+import { def } from '../shared/lang.js'
 import { isObject } from '../shared/utils.js'
+import { arrayMethods } from './array.js'
 export function observe(value) {
   if(!isObject(value)) return
 
@@ -8,6 +10,7 @@ export function observe(value) {
 export class Observer {
   constructor(data) {
     if(Array.isArray(data)) {
+      data.__proto__ = arrayMethods
       this.observeArray(data)
     } else {
       const keys = Object.keys(data)
