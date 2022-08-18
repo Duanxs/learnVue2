@@ -9,6 +9,7 @@ export function observe(value) {
 
 export class Observer {
   constructor(data) {
+    def(data, '__ob__', this)
     if(Array.isArray(data)) {
       data.__proto__ = arrayMethods
       this.observeArray(data)
